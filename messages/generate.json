@@ -1,6 +1,7 @@
 {
   "commandDescription": "generates the Data dictionary for selected org in excel format",
-  "userNameFlagDescription": "Alias or Username for source org",
+  "outputFlagDescription": "destination and file name for xls dataDictionary",
+  "outputFlagManagedPackage": "boolean that indicates if managed package files should also be included",
   "forceFlagDescription": "example boolean flag",
   "errorNoOrgResults": "No results found for the org '%s'."
 }

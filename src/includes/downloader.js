@@ -63,7 +63,6 @@ module.exports = class Downloader {
                 metadata[i].fields = fields;
               }
               filePath = path.join(__dirname, FILE_DIR, '/metadata/', metadata[i].fullName + '.json');
-              debugger;
               fs.writeFileSync(filePath, JSON.stringify(metadata[i]), 'utf-8');
             } else {
               self.config.objects.splice(self.config.objects.indexOf(metadata[i]), 1);

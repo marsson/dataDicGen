@@ -523,10 +523,10 @@ module.exports = class Downloader {
       }
       var fileName = this.config.projectName + '_Data_Dictionary_' + currentDateString + '.xlsx'
       var outputFile = path.join(this.config.output, fileName);
-      //this.logger('Saving ' + fileName + '...');
+
       console.log('Saving ' + fileName + '...')
       workbook.write(outputFile);
-      this.logger(fileName + ' successfully saved!');
+      console.log(fileName + ' successfully saved!');
       resolve();
     });
     return promise;

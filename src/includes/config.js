@@ -48,9 +48,7 @@ validate () {
 
     if (typeof this.sobjects === 'undefined' || this.sobjects === null) {
       this.objects = [
-        'Account',
-        'Contact',
-        'User'
+        'Account','Contact','User'
       ];
     } else {
       // If an array is passed to the module
