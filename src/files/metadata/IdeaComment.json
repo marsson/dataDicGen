@@ -1,1 +1,0 @@
-{"fullName":"IdeaComment","enableFeeds":"false","fields":[{"fullName":"CommentBody"},{"fullName":"IdeaId","type":"Lookup"},{"fullName":"IsPublished"}],"label":"Idea Comment"}
