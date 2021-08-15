@@ -7,7 +7,7 @@ Messages.importMessagesDirectory(__dirname);
 
 // Load the specific messages for this file. Messages from @salesforce/command, @salesforce/core,
 // or any library that is using the messages framework can also be loaded this way.
-const messages = Messages.loadMessages('dataDicGen', 'generate');
+const messages = Messages.loadMessages('sfdxdatadicgen', 'generate');
 
 export default class GenerateDataDictionary extends SfdxCommand {
 
@@ -39,9 +39,9 @@ export default class GenerateDataDictionary extends SfdxCommand {
   protected static requiresProject = false;
 
   public async run(): Promise<AnyJson> {
-    const configFactory = require('./../../includes/config');
-    const downloaderFactory = require('./../../includes/downloader');
-    const excelBuilder = require('./../../includes/excelbuilder');
+    const configFactory = require('../../includes/config');
+    const downloaderFactory = require('../../includes/downloader');
+    const excelBuilder = require('../../includes/excelbuilder');
     const path = require('path');
     const config = new configFactory();
     // ** Validate configuration at this stage **//

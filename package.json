@@ -1,5 +1,5 @@
 {
-  "name": "dataDicGen",
+  "name": "sfdxdatadicgen",
   "description": "Sdfx plugin that generates Data Dictionary from an org",
   "version": "0.1.0",
   "author": "Marcelo Marsson @marsson",
@@ -10,6 +10,8 @@
     "@oclif/errors": "^1",
     "@salesforce/command": "^2",
     "@salesforce/core": "^2",
+    "@sinonjs/fake-timers": "^6.0.1",
+    "@types/sinonjs__fake-timers": "^6.0.3",
     "bytes": "^2.5.0",
     "excel4node": "^1.2.1",
     "tslib": "^1"
@@ -20,8 +22,8 @@
     "@oclif/test": "^1",
     "@salesforce/dev-config": "1.4.1",
     "@types/chai": "^4",
+    "@types/jsforce": "^1.9.33",
     "@types/mocha": "^5",
-    "@types/node": "^10",
     "chai": "^4",
     "globby": "^8",
     "mocha": "^5",

@@ -12,15 +12,17 @@ Increase the governance quality on your salesforce implementation with this Sdfx
 [![License](https://img.shields.io/npm/l/dataDicGen.svg)](https://github.com/marsson/dataDicGen/blob/master/package.json)
 
 <!-- toc -->
+* [Basic usage and informations](#basic-usage-and-informations)
+* [What information is displayed?](#what-information-is-displayed)
 <!-- tocstop -->
 <!-- install -->
 <!-- usage -->
 ```sh-session
-$ npm install -g dataDicGen
+$ npm install -g sfdxdatadicgen
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-dataDicGen/0.1.0 darwin-x64 node-v14.15.4
+sfdxdatadicgen/0.1.0 darwin-x64 node-v14.15.4
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -72,6 +74,8 @@ EXAMPLES
   
   $ sfdx dataDictionary:generate -u myOrgName -m true -s Case,Opportunity,Product2
 ```
+
+_See code: [lib/commands/dataDictionary/generate.js](https://github.com/marsson/dataDicGen/blob/v0.1.0/lib/commands/dataDictionary/generate.js)_
 <!-- commandsstop -->
 <!-- documentation -->
 # Basic usage and informations
