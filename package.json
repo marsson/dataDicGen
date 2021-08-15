@@ -1,7 +1,7 @@
 {
   "name": "sfdxdatadicgen",
   "description": "Sdfx plugin that generates Data Dictionary from an org",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "author": "Marcelo Marsson @marsson",
   "bugs": "https://github.com/marsson/dataDicGen/issues",
   "dependencies": {

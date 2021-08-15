@@ -22,7 +22,7 @@ $ npm install -g sfdxdatadicgen
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-sfdxdatadicgen/0.1.0 darwin-x64 node-v14.15.4
+sfdxdatadicgen/0.1.1 darwin-x64 node-v14.15.4
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -75,7 +75,7 @@ EXAMPLES
   $ sfdx dataDictionary:generate -u myOrgName -m true -s Case,Opportunity,Product2
 ```
 
-_See code: [lib/commands/dataDictionary/generate.js](https://github.com/marsson/dataDicGen/blob/v0.1.0/lib/commands/dataDictionary/generate.js)_
+_See code: [lib/commands/dataDictionary/generate.js](https://github.com/marsson/dataDicGen/blob/v0.1.1/lib/commands/dataDictionary/generate.js)_
 <!-- commandsstop -->
 <!-- documentation -->
 # Basic usage and informations
