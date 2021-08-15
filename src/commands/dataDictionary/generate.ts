@@ -15,6 +15,8 @@ export default class GenerateDataDictionary extends SfdxCommand {
 
   public static examples = [
     `$ sfdx dataDictionary:generate --targetusername myOrg@example.com
+  `,
+    `$ sfdx dataDictionary:generate -u myOrgName -m true -s Case,Opportunity,Product2
   `
   ];
 
@@ -23,7 +25,8 @@ export default class GenerateDataDictionary extends SfdxCommand {
   protected static flagsConfig = {
     // flag with a value (-n, --name=VALUE)
     output: flags.string({char: 'o', description: messages.getMessage('outputFlagDescription')}),
-    includemanaged: flags.boolean({char: 'm', description: messages.getMessage('outputFlagManagedPackage')})
+    includemanaged: flags.boolean({char: 'm', description: messages.getMessage('outputFlagManagedPackage')}),
+    includestandardsobjects: flags.array({char: 's', description: messages.getMessage('includeStandardFlag')})
   };
 
   // Comment this out if your command does not require an org username
@@ -36,7 +39,6 @@ export default class GenerateDataDictionary extends SfdxCommand {
   protected static requiresProject = false;
 
   public async run(): Promise<AnyJson> {
-    // const name = this.flags.name || 'world';
     const configFactory = require('./../../includes/config');
     const downloaderFactory = require('./../../includes/downloader');
     const excelBuilder = require('./../../includes/excelbuilder');
@@ -44,7 +46,9 @@ export default class GenerateDataDictionary extends SfdxCommand {
     const config = new configFactory();
     // ** Validate configuration at this stage **//
     // ** If output name and path are set, set the file name **/
-    if (null != this.flags.output) {
+    if (null == this.flags.output) {
+      config.projectName = this.flags.targetusername;
+    } else {
       config.output = path.dirname(this.flags.output);
       config.projectName = path.basename(this.flags.output);
     }
@@ -56,44 +60,50 @@ export default class GenerateDataDictionary extends SfdxCommand {
     config.validate();
     // this.org is guaranteed because requiresUsername=true, as opposed to supportsUsername
     const conn = this.org.getConnection();
+    const res = await conn.describeGlobal();
 
-    // Will do a describe global, run through all the objects and will add the ones with __c to the list that has all the predefined Standard.
-    conn.describeGlobal().then(res => {
-       // for (let i = 0; i < res.sobjects.length; i++) {
-       //   let object = res.sobjects[i];
-        //  if (object.name.endsWith('__c')){
-        //    config.objects.push(object.name);
-         // }
-        // }
-        // NEW LOGIC!!!
-        const sObjectNames = res.sobjects.map(sObject => {
+    const sObjectNames = res.sobjects.map(sObject => {
           return sObject.name;
         });
-        const filteredArray = sObjectNames.filter(sObject => {
+    // Validate if any of the inputed Standard Objects are invalid
+    const standardSobjectsInput = this.flags.includestandardsobjects;
+    if (null != standardSobjectsInput) {
+      standardSobjectsInput.forEach(sObjectInput => {
+        if (!sObjectNames.includes(sObjectInput)) {
+          throw new SfdxError(messages.getMessage('errorNoMatchingsObject', [sObjectInput]));
+         // return;
+        }
+      });
+    } else {
+    }
+
+    const filteredArray = sObjectNames.filter(sObject => {
           // Always all the Custom should go.
           // if include managed packages flag is on, all objects names with __ should be added.
 
           if ( sObject.endsWith('__c')) {
             // ends with __c
             // If is a custom object from a  managed package, do not return
-            if (this.flags.includemanaged == false && sObject.replace('__c', '').includes('__')) {
+            if (this.flags.includemanaged === false && sObject.replace('__c', '').includes('__')) {
               return null;
             }
             return sObject;
           }
+          if (standardSobjectsInput?.includes(sObject)) {
+            return sObject;
+          }
           return null;
         });
-        config.objects.push(...filteredArray);
-        const downloader = new downloaderFactory(config, this.logger.info, conn);
-        const builder = new excelBuilder(config, this.logger.info);
+    config.objects.push(...filteredArray);
+    const downloader = new downloaderFactory(config, this.logger.info, conn);
+    const builder = new excelBuilder(config, this.logger.info);
 
         // Download metadata files
-        downloader.execute().then(result => {
-          this.ux.log(result + ' downloaded');
+    const size = await downloader.execute();
+    this.ux.log(size + ' downloaded');
           // Generate the excel file
-          builder.generate();
-        });
-      });
+    await builder.generate();
+
     // Return an object to be displayed with --json
     return {};
   }

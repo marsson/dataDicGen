@@ -2,6 +2,7 @@
   "commandDescription": "generates the Data dictionary for selected org in excel format",
   "outputFlagDescription": "destination and file name for xls dataDictionary",
   "outputFlagManagedPackage": "boolean that indicates if managed package files should also be included",
+  "includeStandardFlag": "Additional standard objects (Account, Contact and User go by default)",
   "forceFlagDescription": "example boolean flag",
-  "errorNoOrgResults": "No results found for the org '%s'."
+  "errorNoMatchingsObject": "The Object '%s' does not seem to exist in this org."
 }

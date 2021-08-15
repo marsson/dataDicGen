@@ -84,7 +84,7 @@ module.exports = class Downloader {
   execute() {
     const promise = new Promise((resolve, reject) => {
       const self = this;
-      debugger;
+
       //self.logger('Downloading...');
 
       let downloadArray = new Array();
@@ -118,7 +118,6 @@ module.exports = class Downloader {
         if (self.config.debug) {
           self.utils.log(err, self.config);
         }
-        debugger;
         //self.logger(err);
       });
     });

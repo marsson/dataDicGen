@@ -1,19 +1,17 @@
 dataDicGen
 ==========
 
-Sdfx plugin that generates Data Dictionary from an org
+Increase the governance quality on your salesforce implementation with this Sdfx plugin that generates Data Dictionary in xlsx format from an org.
+
 
 [![Version](https://img.shields.io/npm/v/dataDicGen.svg)](https://npmjs.org/package/dataDicGen)
-[![CircleCI](https://circleci.com/gh/marsson/dataDicGen/tree/master.svg?style=shield)](https://circleci.com/gh/marsson/dataDicGen/tree/master)
 [![Appveyor CI](https://ci.appveyor.com/api/projects/status/github/marsson/dataDicGen?branch=master&svg=true)](https://ci.appveyor.com/project/heroku/dataDicGen/branch/master)
 [![Codecov](https://codecov.io/gh/marsson/dataDicGen/branch/master/graph/badge.svg)](https://codecov.io/gh/marsson/dataDicGen)
-[![Greenkeeper](https://badges.greenkeeper.io/marsson/dataDicGen.svg)](https://greenkeeper.io/)
 [![Known Vulnerabilities](https://snyk.io/test/github/marsson/dataDicGen/badge.svg)](https://snyk.io/test/github/marsson/dataDicGen)
 [![Downloads/week](https://img.shields.io/npm/dw/dataDicGen.svg)](https://npmjs.org/package/dataDicGen)
 [![License](https://img.shields.io/npm/l/dataDicGen.svg)](https://github.com/marsson/dataDicGen/blob/master/package.json)
 
 <!-- toc -->
-* [Debugging your plugin](#debugging-your-plugin)
 <!-- tocstop -->
 <!-- install -->
 <!-- usage -->
@@ -75,27 +73,30 @@ EXAMPLES
   $ sfdx dataDictionary:generate -u myOrgName -m true -s Case,Opportunity,Product2
 ```
 <!-- commandsstop -->
-<!-- debugging-your-plugin -->
-# Debugging your plugin
-We recommend using the Visual Studio Code (VS Code) IDE for your plugin development. Included in the `.vscode` directory of this plugin is a `launch.json` config file, which allows you to attach a debugger to the node process when running your commands.
+<!-- documentation -->
+# Basic usage and informations
+This plugin was written based on the [data model generator](sfdc-generate-data-dictionary)
+ by @gavignon. 
+The standard behaviour of the script is to generate a file, 
+on the folder that the command is run on its most basic configuration: `$ sfdx sfdc-generate-data-dictionary -u myalias`, with the same name
+of the alias/username of an authenticated Org/scratch org.
+As a standard, the application will list all Custom objects, and *Accounts, Contacts and Usres* for the Standard objects.
+Objects from *Managed Packages*  and other *Standard Objects* have to be configured.
+The attribute -m takes in a boolean and defines if the managed packages objects should be documented on the data dictionary. If the flag is set to `true`, ALL MANAGED PACKAGES OBJECTS WILL BE ADDED TO THE FILE. To
+select extra objects to be included in the data dictionary, Manually add the *API NAMES* of the desired objects (if a managed package object, include the managed package prefix).
+# What information is displayed?
 
-To debug the `hello:org` command: 
-1. Start the inspector
-  
-If you linked your plugin to the sfdx cli, call your command with the `dev-suspend` switch: 
-```sh-session
-$ sfdx hello:org -u myOrg@example.com --dev-suspend
-```
-  
-Alternatively, to call your command using the `bin/run` script, set the `NODE_OPTIONS` environment variable to `--inspect-brk` when starting the debugger:
-```sh-session
-$ NODE_OPTIONS=--inspect-brk bin/run hello:org -u myOrg@example.com
-```
+As of now, the SFDX Plugin displays:
+- Spreadsheet workbooks separated by Objects Api Names
+- Field Names
+- Field Types
+- Possible Values if Picklist
+- Formula if Formula field
+- Read only flag
+- Mandatory Flag
 
-2. Set some breakpoints in your command code
-3. Click on the Debug icon in the Activity Bar on the side of VS Code to open up the Debug view.
-4. In the upper left hand corner of VS Code, verify that the "Attach to Remote" launch configuration has been chosen.
-5. Hit the green play button to the left of the "Attach to Remote" launch configuration window. The debugger should now be suspended on the first line of the program. 
-6. Hit the green play button at the top middle of VS Code (this play button will be to the right of the play button that you clicked in step #5).
-<br><img src=".images/vscodeScreenshot.png" width="480" height="278"><br>
-Congrats, you are debugging!
+Feel free to ask for features, but as for time to implement them, I cannot promise too much, but I will work on them as soon as I can. If you want to help out to support this initiative, a donation is welcome.
+## Donation
+If this project help you, you can give me a cup of coffee :)
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?business=J53BMV8HFVHUG&no_recurring=0&currency_code=AUD)

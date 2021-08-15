@@ -4,7 +4,7 @@ const path = require('path');
 const Utils = require('./utils.js');
 
 const FILE_DIR = '../files';
-const MAX_PICKLIST_VALUES = 2;
+const MAX_PICKLIST_VALUES = 300;
 
 // Styles
 var workbook = new excel.Workbook();
@@ -521,7 +521,7 @@ module.exports = class Downloader {
       }else{
         currentDateString = currentDateString.substring(0, currentDateString.indexOf('T'));
       }
-      var fileName = this.config.projectName + '_Data_Dictionary_' + currentDateString + '.xlsx'
+      var fileName = this.config.projectName +'-'+ currentDateString + '.xlsx'
       var outputFile = path.join(this.config.output, fileName);
 
       console.log('Saving ' + fileName + '...')
