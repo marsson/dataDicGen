@@ -1,7 +1,7 @@
 {
   "name": "dataDicGen",
   "description": "Sdfx plugin that generates Data Dictionary from an org",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Marcelo Marsson @marsson",
   "bugs": "https://github.com/marsson/dataDicGen/issues",
   "dependencies": {
@@ -10,9 +10,9 @@
     "@oclif/errors": "^1",
     "@salesforce/command": "^2",
     "@salesforce/core": "^2",
-    "tslib": "^1",
+    "bytes": "^2.5.0",
     "excel4node": "^1.2.1",
-    "bytes": "^2.5.0"
+    "tslib": "^1"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1",

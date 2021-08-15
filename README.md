@@ -22,7 +22,7 @@ $ npm install -g dataDicGen
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-dataDicGen/0.0.0 darwin-x64 node-v15.10.0
+dataDicGen/0.0.1 darwin-x64 node-v14.15.4
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -30,7 +30,49 @@ USAGE
 ```
 <!-- usagestop -->
 <!-- commands -->
+* [`sfdx dataDictionary:generate [-o <string>] [-m] [-s <array>] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-datadictionarygenerate--o-string--m--s-array--v-string--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 * [`sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-helloorg--n-string--f--v-string--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+
+## `sfdx dataDictionary:generate [-o <string>] [-m] [-s <array>] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+generates the Data dictionary for selected org in excel format
+
+```
+generates the Data dictionary for selected org in excel format
+
+USAGE
+  $ sfdx dataDictionary:generate [-o <string>] [-m] [-s <array>] [-v <string>] [-u <string>] [--apiversion <string>] 
+  [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+OPTIONS
+  -m, --includemanaged                                                              boolean that indicates if managed
+                                                                                    package files should also be
+                                                                                    included
+
+  -o, --output=output                                                               destination and file name for xls
+                                                                                    dataDictionary
+
+  -s, --includestandardsobjects=includestandardsobjects                             Additional standard objects
+                                                                                    (Account, Contact and User go by
+                                                                                    default)
+
+  -u, --targetusername=targetusername                                               username or alias for the target
+                                                                                    org; overrides default target org
+
+  -v, --targetdevhubusername=targetdevhubusername                                   username or alias for the dev hub
+                                                                                    org; overrides default dev hub org
+
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
+
+EXAMPLE
+  $ sfdx dataDictionary:generate --targetusername myOrg@example.com
+```
 
 ## `sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
