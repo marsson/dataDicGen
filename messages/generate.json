@@ -4,5 +4,6 @@
   "outputFlagManagedPackage": "boolean that indicates if managed package files should also be included",
   "includeStandardFlag": "Additional standard objects (Account, Contact and User go by default)",
   "forceFlagDescription": "example boolean flag",
-  "errorNoMatchingsObject": "The Object '%s' does not seem to exist in this org."
+  "errorNoMatchingsObject": "The Object '%s' does not seem to exist in this org.",
+  "includeManagePackageList": "List of namespaces of manage packages that will be downloaded.+"
 }

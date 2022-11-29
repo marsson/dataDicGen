@@ -26,7 +26,8 @@ export default class GenerateDataDictionary extends SfdxCommand {
     // flag with a value (-n, --name=VALUE)
     output: flags.string({char: 'o', description: messages.getMessage('outputFlagDescription')}),
     includemanaged: flags.boolean({char: 'm', description: messages.getMessage('outputFlagManagedPackage')}),
-    includestandardsobjects: flags.array({char: 's', description: messages.getMessage('includeStandardFlag')})
+    includestandardsobjects: flags.array({char: 's', description: messages.getMessage('includeStandardFlag')}),
+    includemanagedpackages: flags.array({char:'l', description:messages.getMessage('includeManagePackageList')})
   };
 
   // Comment this out if your command does not require an org username
@@ -42,8 +43,10 @@ export default class GenerateDataDictionary extends SfdxCommand {
     const configFactory = require('../../includes/config');
     const downloaderFactory = require('../../includes/downloader');
     const excelBuilder = require('../../includes/excelbuilder');
+    const theUtils = require('../../includes/utils');
     const path = require('path');
     const config = new configFactory();
+    const utils = new theUtils();
     // ** Validate configuration at this stage **//
     // ** If output name and path are set, set the file name **/
     if (null == this.flags.output) {
@@ -81,17 +84,26 @@ export default class GenerateDataDictionary extends SfdxCommand {
           // Always all the Custom should go.
           // if include managed packages flag is on, all objects names with __ should be added.
 
-          if ( sObject.endsWith('__c')) {
-            // ends with __c
-            // If is a custom object from a  managed package, do not return
-            if (this.flags.includemanaged === false && sObject.replace('__c', '').includes('__')) {
-              return null;
-            }
+          if ( utils.isCustomObject(sObject) && !utils.isManagedPackageObject(sObject)) {
             return sObject;
           }
+
           if (standardSobjectsInput?.includes(sObject)) {
             return sObject;
           }
+
+          if (this.flags.includemanaged === true && utils.isManagedPackageObject(sObject)) {
+              return sObject;
+            }
+
+          if(this.flags.includemanagedpackages != null && utils.isManagedPackageObject(sObject)){
+            for(const namespace in this.flags.includemanagedpackages){
+              if((0 === sObject.indexOf(this.flags.includemanagedpackages[namespace]))){
+                return sObject;
+              }
+            }
+          }
+
           return null;
         });
     config.objects.push(...filteredArray);
