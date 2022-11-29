@@ -4,11 +4,11 @@ dataDicGen
 Increase the governance quality on your salesforce implementation with this Sdfx plugin that generates Data Dictionary in xlsx format from an org.
 
 
-[![Version](https://img.shields.io/npm/v/dataDicGen.svg)](https://npmjs.org/package/dataDicGen)
+[![Version](https://img.shields.io/npm/v/sfdxdatadicgen.svg)](https://npmjs.org/package/sfdxdatadicgen)
 [![Appveyor CI](https://ci.appveyor.com/api/projects/status/github/marsson/dataDicGen?branch=master&svg=true)](https://ci.appveyor.com/project/heroku/dataDicGen/branch/master)
 [![Codecov](https://codecov.io/gh/marsson/dataDicGen/branch/master/graph/badge.svg)](https://codecov.io/gh/marsson/dataDicGen)
 [![Known Vulnerabilities](+)](https://snyk.io/test/github/marsson/dataDicGen)
-[![Downloads/week](https://img.shields.io/npm/dw/dataDicGen.svg)](https://npmjs.org/package/dataDicGen)
+[![Downloads/week](https://img.shields.io/npm/dw/sfdxdatadicgen.svg)](https://npmjs.org/package/sfdxdatadicgen)
 [![License](https://img.shields.io/npm/l/dataDicGen.svg)](https://github.com/marsson/dataDicGen/blob/master/package.json)
 
 <!-- toc -->
