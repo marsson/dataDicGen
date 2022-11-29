@@ -76,12 +76,13 @@ validate () {
     }
     if (typeof this.columns === 'undefined' || this.columns === null) {
       this.columns = {
-        'ReadOnly': 5,
+        'Unique': 7,
         'Mandatory': 3,
         'Name': 25,
         'Description': 90,
         'Helptext': 90,
         'APIName': 25,
+        'Visibility':23,
         'Type': 27,
         'Values': 45
       };

@@ -147,8 +147,8 @@ module.exports = class Downloader {
     worksheet.row(1).setHeight(40);
     worksheet.row(2).setHeight(20);
 
-    if (columnsKeys.indexOf('ReadOnly') > -1)
-      worksheet.column(columnsKeys.indexOf('ReadOnly') + 1).setWidth(columns.ReadOnly);
+    if (columnsKeys.indexOf('Unique') > -1)
+      worksheet.column(columnsKeys.indexOf('Unique') + 1).setWidth(columns.Unique);
     if (columnsKeys.indexOf('Mandatory') > -1)
       worksheet.column(columnsKeys.indexOf('Mandatory') + 1).setWidth(columns.Mandatory);
     if (columnsKeys.indexOf('Name') > -1)
@@ -159,6 +159,8 @@ module.exports = class Downloader {
       worksheet.column(columnsKeys.indexOf('Helptext') + 1).setWidth(columns.Helptext);
     if (columnsKeys.indexOf('APIName') > -1)
       worksheet.column(columnsKeys.indexOf('APIName') + 1).setWidth(columns.APIName);
+    if (columnsKeys.indexOf('Visibility') > -1)
+      worksheet.column(columnsKeys.indexOf('Visibility') + 1).setWidth(columns.Visibility);
     if (columnsKeys.indexOf('Type') > -1)
       worksheet.column(columnsKeys.indexOf('Type') + 1).setWidth(columns.Type);
     if (columnsKeys.indexOf('Values') > -1)
@@ -167,8 +169,8 @@ module.exports = class Downloader {
     // Build header and subheader
     worksheet.cell(1, 1, 1, columnsKeys.length, true).string('SALESFORCE').style(global).style(header);
 
-    if (columnsKeys.indexOf('ReadOnly') > -1)
-      worksheet.cell(2, columnsKeys.indexOf('ReadOnly') + 1).string('R/O').style(global).style(subHeader).style(centerAlign);
+    if (columnsKeys.indexOf('Unique') > -1)
+      worksheet.cell(2, columnsKeys.indexOf('Unique') + 1).string('Unique').style(global).style(subHeader).style(centerAlign);
     if (columnsKeys.indexOf('Mandatory') > -1)
       worksheet.cell(2, columnsKeys.indexOf('Mandatory') + 1).string('M').style(global).style(subHeader).style(centerAlign);
     if (columnsKeys.indexOf('Name') > -1)
@@ -179,6 +181,8 @@ module.exports = class Downloader {
       worksheet.cell(2, columnsKeys.indexOf('Helptext') + 1).string('Helptext').style(global).style(subHeader).style(indentLeft);
     if (columnsKeys.indexOf('APIName') > -1)
       worksheet.cell(2, columnsKeys.indexOf('APIName') + 1).string('API Name').style(global).style(subHeader).style(indentLeft);
+    if (columnsKeys.indexOf('Visibility') > -1)
+      worksheet.cell(2, columnsKeys.indexOf('Visibility') + 1).string('Security Classification').style(global).style(subHeader).style(indentLeft);
     if (columnsKeys.indexOf('Type') > -1)
       worksheet.cell(2, columnsKeys.indexOf('Type') + 1).string('Type').style(global).style(subHeader).style(centerAlign);
     if (columnsKeys.indexOf('Values') > -1)
@@ -228,8 +232,8 @@ module.exports = class Downloader {
         }
 
 
-        if (columnsKeys.indexOf('ReadOnly') > -1)
-          worksheet.cell(line, columnsKeys.indexOf('ReadOnly') + 1).string(!field.updateable ? "✓" : '☐').style(global).style(centerAlign).style(rowStyle);
+        if (columnsKeys.indexOf('Unique') > -1)
+          worksheet.cell(line, columnsKeys.indexOf('Unique') + 1).string(field.unique.toString()).style(global).style(centerAlign).style(rowStyle);
         if (columnsKeys.indexOf('Mandatory') > -1)
           worksheet.cell(line, columnsKeys.indexOf('Mandatory') + 1).string(!field.nillable && field.updateable && field.type != 'boolean' ? "*" : '').style(global).style(centerAlign).style(rowStyle).style(redColor);
         if (columnsKeys.indexOf('Name') > -1)
@@ -240,6 +244,8 @@ module.exports = class Downloader {
           worksheet.cell(line, columnsKeys.indexOf('Helptext') + 1).string(field.inlineHelpText != null ? field.inlineHelpText : '').style(global).style(rowStyle).style(indentLeft);
         if (columnsKeys.indexOf('APIName') > -1)
           worksheet.cell(line, columnsKeys.indexOf('APIName') + 1).string(field.name).style(global).style(rowStyle).style(indentLeft);
+        if (columnsKeys.indexOf('Visibility') > -1)
+          worksheet.cell(line, columnsKeys.indexOf('Visibility') + 1).string(field.securityClassification !=null ? field.securityClassification : '' ).style(global).style(rowStyle).style(indentLeft);
 
         // tooling
         // worksheet.cell(line, columnsKeys.indexOf('APIName') + 4).string(field.LastModifiedDate != null ? field.LastModifiedDate : '').style(global).style(rowStyle).style(indentLeft);
@@ -489,6 +495,14 @@ module.exports = class Downloader {
 
               if (correspondingField.type === 'MasterDetail')
                 currentObjectFieldsDescribe[j].type = correspondingField.type;
+
+              if (correspondingField.securityClassification != null){
+                currentObjectFieldsDescribe[j].securityClassification = correspondingField.securityClassification;
+              }
+
+              if (correspondingField.unique != null){
+                currentObjectFieldsDescribe[j].unique = correspondingField.unique;
+              }
             }
 
           }

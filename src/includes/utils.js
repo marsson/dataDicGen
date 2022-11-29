@@ -107,4 +107,20 @@ module.exports = class Utils {
   capitalize (string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
+
+  isManagedPackageObject(objectApiName){
+    if(objectApiName.split("__").length > 2) {
+      return true;
+    }
+
+    return false;
+  }
+
+  isCustomObject(objectApiName){
+    if (objectApiName.endsWith("__c")){
+      return true
+    }
+
+    return false;
+  }
 };

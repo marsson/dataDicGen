@@ -7,7 +7,7 @@ Increase the governance quality on your salesforce implementation with this Sdfx
 [![Version](https://img.shields.io/npm/v/dataDicGen.svg)](https://npmjs.org/package/dataDicGen)
 [![Appveyor CI](https://ci.appveyor.com/api/projects/status/github/marsson/dataDicGen?branch=master&svg=true)](https://ci.appveyor.com/project/heroku/dataDicGen/branch/master)
 [![Codecov](https://codecov.io/gh/marsson/dataDicGen/branch/master/graph/badge.svg)](https://codecov.io/gh/marsson/dataDicGen)
-[![Known Vulnerabilities](https://snyk.io/test/github/marsson/dataDicGen/badge.svg)](https://snyk.io/test/github/marsson/dataDicGen)
+[![Known Vulnerabilities](+)](https://snyk.io/test/github/marsson/dataDicGen)
 [![Downloads/week](https://img.shields.io/npm/dw/dataDicGen.svg)](https://npmjs.org/package/dataDicGen)
 [![License](https://img.shields.io/npm/l/dataDicGen.svg)](https://github.com/marsson/dataDicGen/blob/master/package.json)
 
@@ -22,7 +22,7 @@ $ npm install -g sfdxdatadicgen
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-sfdxdatadicgen/0.1.1 darwin-x64 node-v14.15.4
+sfdxdatadicgen/0.1.3 darwin-x64 node-v15.10.0
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -30,20 +30,21 @@ USAGE
 ```
 <!-- usagestop -->
 <!-- commands -->
-* [`sfdx dataDictionary:generate [-o <string>] [-m] [-s <array>] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-datadictionarygenerate--o-string--m--s-array--v-string--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx dataDictionary:generate [-o <string>] [-m] [-s <array>] [-l <array>] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-datadictionarygenerate--o-string--m--s-array--l-array--v-string--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
-## `sfdx dataDictionary:generate [-o <string>] [-m] [-s <array>] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+## `sfdx dataDictionary:generate [-o <string>] [-m] [-s <array>] [-l <array>] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 generates the Data dictionary for selected org in excel format
 
 ```
-generates the Data dictionary for selected org in excel format
-
 USAGE
-  $ sfdx dataDictionary:generate [-o <string>] [-m] [-s <array>] [-v <string>] [-u <string>] [--apiversion <string>] 
-  [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+  $ sfdx dataDictionary:generate [-o <string>] [-m] [-s <array>] [-l <array>] [-v <string>] [-u <string>] [--apiversion 
+  <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
+  -l, --includemanagedpackages=includemanagedpackages                               List of namespaces of manage
+                                                                                    packages that will be downloaded.+
+
   -m, --includemanaged                                                              boolean that indicates if managed
                                                                                     package files should also be
                                                                                     included
@@ -75,7 +76,7 @@ EXAMPLES
   $ sfdx dataDictionary:generate -u myOrgName -m true -s Case,Opportunity,Product2
 ```
 
-_See code: [lib/commands/dataDictionary/generate.js](https://github.com/marsson/dataDicGen/blob/v0.1.1/lib/commands/dataDictionary/generate.js)_
+_See code: [src/commands/dataDictionary/generate.ts](https://github.com/marsson/dataDicGen/blob/v0.1.3/src/commands/dataDictionary/generate.ts)_
 <!-- commandsstop -->
 <!-- documentation -->
 # Basic usage and informations
