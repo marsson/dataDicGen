@@ -10,14 +10,10 @@ Improve the governance of your Salesforce implementation with this Salesforce CL
 [![License](https://img.shields.io/npm/l/dataDicGen.svg)](https://github.com/marsson/dataDicGen/blob/master/package.json)
 
 <!-- toc -->
-* [Requirements](#requirements)
-* [Installation](#installation)
-* [Usage](#usage)
-* [Output formats](#output-formats)
-* [Schema map](#schema-map)
-* [Commands](#commands)
-* [Development](#development)
-* [Donation](#donation)
+* [default: Excel](#default-excel)
+* [every format at once + schema map](#every-format-at-once--schema-map)
+* [HTML report + schema map only, custom output base](#html-report--schema-map-only-custom-output-base)
+* [include extra standard objects and a managed-package namespace](#include-extra-standard-objects-and-a-managed-package-namespace)
 <!-- tocstop -->
 
 ## Requirements
@@ -118,33 +114,97 @@ A single `<base>.html` file with a top tab bar that switches between two views:
 The HTML file is **fully self-contained** — D3.js is bundled inline, so there are no external assets and no internet connection is required to open it.
 
 <!-- commands -->
-## Commands
+* [`sf data-dictionary generate`](#sf-data-dictionary-generate)
+* [`sf dataDictionary generate`](#sf-datadictionary-generate)
 
-### `sf data-dictionary generate`
+## `sf data-dictionary generate`
+
+Generate a data dictionary for the selected org in one or more formats.
 
 ```
 USAGE
-  $ sf data-dictionary generate -o <value> [--json] [--flags-dir <value>]
-    [-f <value>] [-m] [-s <value>...] [-l <value>...] [-t <value>...]
+  $ sf data-dictionary generate -o <value> [--json] [--flags-dir <value>] [-f <value>] [-m] [-s <value>...] [-l <value>...]
+    [-t <value>...]
 
 FLAGS
-  -o, --target-org=<value>                  (required) Username or alias of the target org.
-  -f, --output=<value>                      Destination directory + base file name
-                                            (extension is appended per format).
-  -t, --format=<value>...                   Output formats (xlsx, html, json, md).
-                                            Comma-separated. Default: xlsx.
+  -f, --output=<value>                      Destination directory and base file name (extension is appended per format).
+  -l, --includemanagedpackages=<value>...   Comma-separated namespaces of managed packages whose objects should be
+                                            included.
   -m, --includemanaged                      Include objects from all managed packages.
-  -s, --includestandardsobjects=<value>...  Comma-separated standard objects to include
-                                            in addition to Account, Contact, and User.
-  -l, --includemanagedpackages=<value>...   Comma-separated namespaces of managed packages
-                                            whose objects should be included.
+  -o, --target-org=<value>                  (required) Username or alias of the target org. Not required if the
+                                            `target-org` configuration variable is already set.
+  -s, --includestandardsobjects=<value>...  Additional standard objects to include (Account, Contact, and User are
+                                            included by default).
+  -t, --format=<value>...                   Output formats to generate. One or more of: xlsx, html, json, md.
 
 GLOBAL FLAGS
-  --flags-dir=<value>                       Import flag values from a directory.
-  --json                                    Format output as json.
+  --flags-dir=<value>  Import flag values from a directory.
+  --json               Format output as json.
+
+DESCRIPTION
+  Generate a data dictionary for the selected org in one or more formats.
+
+  Connects to the target org, describes its sObjects, and produces a data dictionary in the requested formats: Excel
+  (.xlsx), HTML report, JSON, or Markdown. The HTML format also produces an interactive schema map under
+  <output>/schema/.
 
 ALIASES
-  $ sf dataDictionary:generate    (deprecated)
+  $ sf dataDictionary generate
+
+EXAMPLES
+  $ sf data-dictionary generate --target-org myOrg@example.com
+
+  $ sf data-dictionary generate -o myOrgName -m -s Case,Opportunity,Product2
+
+  $ sf data-dictionary generate -o myOrgName -f ./out/dict --format xlsx,html,json,md
+
+  $ sf data-dictionary generate -o myOrgName -f ./out/dict --format html
+```
+
+_See code: [src/commands/data-dictionary/generate.ts](https://github.com/marsson/dataDicGen/blob/v1.0.0/src/commands/data-dictionary/generate.ts)_
+
+## `sf dataDictionary generate`
+
+Generate a data dictionary for the selected org in one or more formats.
+
+```
+USAGE
+  $ sf dataDictionary generate -o <value> [--json] [--flags-dir <value>] [-f <value>] [-m] [-s <value>...] [-l <value>...]
+    [-t <value>...]
+
+FLAGS
+  -f, --output=<value>                      Destination directory and base file name (extension is appended per format).
+  -l, --includemanagedpackages=<value>...   Comma-separated namespaces of managed packages whose objects should be
+                                            included.
+  -m, --includemanaged                      Include objects from all managed packages.
+  -o, --target-org=<value>                  (required) Username or alias of the target org. Not required if the
+                                            `target-org` configuration variable is already set.
+  -s, --includestandardsobjects=<value>...  Additional standard objects to include (Account, Contact, and User are
+                                            included by default).
+  -t, --format=<value>...                   Output formats to generate. One or more of: xlsx, html, json, md.
+
+GLOBAL FLAGS
+  --flags-dir=<value>  Import flag values from a directory.
+  --json               Format output as json.
+
+DESCRIPTION
+  Generate a data dictionary for the selected org in one or more formats.
+
+  Connects to the target org, describes its sObjects, and produces a data dictionary in the requested formats: Excel
+  (.xlsx), HTML report, JSON, or Markdown. The HTML format also produces an interactive schema map under
+  <output>/schema/.
+
+ALIASES
+  $ sf dataDictionary generate
+
+EXAMPLES
+  $ sf data-dictionary generate --target-org myOrg@example.com
+
+  $ sf data-dictionary generate -o myOrgName -m -s Case,Opportunity,Product2
+
+  $ sf data-dictionary generate -o myOrgName -f ./out/dict --format xlsx,html,json,md
+
+  $ sf data-dictionary generate -o myOrgName -f ./out/dict --format html
 ```
 <!-- commandsstop -->
 
