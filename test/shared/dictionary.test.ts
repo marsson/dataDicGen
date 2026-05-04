@@ -90,6 +90,46 @@ describe('shared/dictionary', () => {
       expect(byName.Status__c.relationshipKind).to.equal(null);
     });
 
+    it('captures field-level data classification (security + compliance) from metadata', async () => {
+      await fs.writeFile(
+        path.join(tmpDir, 'describe', 'Lead.json'),
+        JSON.stringify([
+          { name: 'Email', label: 'Email', type: 'email', custom: false, referenceTo: [] },
+          { name: 'Phone', label: 'Phone', type: 'phone', custom: false, referenceTo: [] },
+        ])
+      );
+      await fs.writeFile(
+        path.join(tmpDir, 'metadata', 'Lead.json'),
+        JSON.stringify({
+          fullName: 'Lead',
+          fields: [
+            {
+              fullName: 'Email',
+              securityClassification: 'Confidential',
+              complianceGroup: 'GDPR;PII;CCPA',
+              businessStatus: 'Active',
+              businessOwnerGroup: 'Sales Operations',
+            },
+          ],
+        })
+      );
+      const objs = await loadDictionary(tmpDir, ['Lead']);
+      const byName = Object.fromEntries(objs[0].fields.map((f) => [f.name, f]));
+      expect(byName.Email.classification).to.deep.equal({
+        securityClassification: 'Confidential',
+        complianceGroup: ['GDPR', 'PII', 'CCPA'],
+        businessStatus: 'Active',
+        businessOwnerGroup: 'Sales Operations',
+      });
+      // Field with no metadata gets an empty classification block.
+      expect(byName.Phone.classification).to.deep.equal({
+        securityClassification: null,
+        complianceGroup: [],
+        businessStatus: null,
+        businessOwnerGroup: null,
+      });
+    });
+
     it('classifies reference fields as master-detail when metadata declares type "MasterDetail"', async () => {
       await fs.writeFile(
         path.join(tmpDir, 'describe', 'Item__c.json'),

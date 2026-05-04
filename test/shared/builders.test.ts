@@ -53,6 +53,24 @@ describe('shared/builders', () => {
       expect(content).to.include('-s Opportunity,Lead');
     });
 
+    it('labels reference fields as lookup or master-detail (not just "reference")', async () => {
+      const filePath = await buildMarkdown({ outputDir, baseName: 'demo', objects: allObjects });
+      const content = await fs.readFile(filePath, 'utf8');
+      // Contact.AccountId is a lookup, Project__c.Account__c is master-detail.
+      expect(content).to.match(/AccountId[^|]+\|[^|]+\|[^|]*lookup → Account/);
+      expect(content).to.match(/Account__c[^|]+\|[^|]+\|[^|]*master-detail → Account/);
+      expect(content).to.not.match(/\|\s*reference → /);
+    });
+
+    it('emits a Classification column populated with security + compliance values', async () => {
+      const filePath = await buildMarkdown({ outputDir, baseName: 'demo', objects: allObjects });
+      const content = await fs.readFile(filePath, 'utf8');
+      expect(content).to.include('| API Name | Label | Type | Flags | Classification | Description |');
+      expect(content).to.include('| --- | --- | --- | --- | --- | --- |');
+      // Contact.Email carries Confidential + GDPR, PII.
+      expect(content).to.match(/Email[^|]+\|[^|]+\|[^|]+\|[^|]+\|[^|]*Confidential · GDPR, PII/);
+    });
+
     it('escapes pipe characters in field metadata to keep tables valid', async () => {
       const objects = [{
         ...allObjects[0],
@@ -101,6 +119,25 @@ describe('shared/builders', () => {
       expect(entries).to.include('demo.html');
       expect(entries).to.not.include('demo-schema.html');
       expect(entries).to.not.include('schema');
+    });
+
+    it('renders a Classification column with security/compliance/business pills in the reference view', async () => {
+      const filePath = await buildHtml({ outputDir, baseName: 'demo', objects: allObjects });
+      const content = await fs.readFile(filePath, 'utf8');
+      expect(content).to.include('<th>Classification</th>');
+      expect(content).to.include('class="class-sec"');
+      expect(content).to.include('class="class-comp"');
+      expect(content).to.include('>Confidential</span>');
+      expect(content).to.include('>GDPR</span>');
+      expect(content).to.include('>PII</span>');
+    });
+
+    it('labels reference fields as lookup or master-detail in the reference view type column', async () => {
+      const filePath = await buildHtml({ outputDir, baseName: 'demo', objects: allObjects });
+      const content = await fs.readFile(filePath, 'utf8');
+      expect(content).to.include('lookup → Account');
+      expect(content).to.include('master-detail → Account');
+      expect(content).to.not.include('>reference → ');
     });
 
     it('lazy-initializes the schema view on tab activation so D3 measures a sized canvas', async () => {

@@ -15,7 +15,8 @@ function escapeCell(value: string | null | undefined): string {
 
 function describeType(field: FieldEntry): string {
   if (field.type === 'reference' && field.referenceTo.length > 0) {
-    return `reference → ${field.referenceTo.join(', ')}`;
+    const kind = field.relationshipKind === 'master-detail' ? 'master-detail' : 'lookup';
+    return `${kind} → ${field.referenceTo.join(', ')}`;
   }
   if (field.length != null && (field.type === 'string' || field.type === 'textarea')) {
     return `${field.type}(${field.length})`;
@@ -24,6 +25,14 @@ function describeType(field: FieldEntry): string {
     return `${field.type}(${field.precision},${field.scale ?? 0})`;
   }
   return field.type;
+}
+
+function formatClassification(field: FieldEntry): string {
+  const c = field.classification;
+  const parts: string[] = [];
+  if (c.securityClassification) parts.push(c.securityClassification);
+  if (c.complianceGroup.length > 0) parts.push(c.complianceGroup.join(', '));
+  return parts.join(' · ');
 }
 
 function renderFieldRow(field: FieldEntry): string {
@@ -37,6 +46,7 @@ function renderFieldRow(field: FieldEntry): string {
     escapeCell(field.label),
     escapeCell(describeType(field)),
     flags.join(', '),
+    escapeCell(formatClassification(field)),
     escapeCell(field.description ?? field.inlineHelpText ?? ''),
   ]
     .map((c) => c || ' ')
@@ -51,8 +61,8 @@ function renderObjectSection(obj: ObjectEntry): string {
     lines.push(`> ${obj.description}`);
   }
   lines.push('');
-  lines.push('| API Name | Label | Type | Flags | Description |');
-  lines.push('| --- | --- | --- | --- | --- |');
+  lines.push('| API Name | Label | Type | Flags | Classification | Description |');
+  lines.push('| --- | --- | --- | --- | --- | --- |');
   for (const field of obj.fields) {
     lines.push(`| ${renderFieldRow(field)} |`);
   }

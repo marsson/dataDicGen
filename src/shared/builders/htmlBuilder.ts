@@ -21,7 +21,8 @@ function escapeHtml(s: string | null | undefined): string {
 
 function describeType(field: FieldEntry): string {
   if (field.type === 'reference' && field.referenceTo.length > 0) {
-    return `reference → ${field.referenceTo.join(', ')}`;
+    const kind = field.relationshipKind === 'master-detail' ? 'master-detail' : 'lookup';
+    return `${kind} → ${field.referenceTo.join(', ')}`;
   }
   if (field.length != null && (field.type === 'string' || field.type === 'textarea')) {
     return `${field.type}(${field.length})`;
@@ -33,6 +34,21 @@ function describeType(field: FieldEntry): string {
     return `${field.type}(${field.precision},${field.scale ?? 0})`;
   }
   return field.type;
+}
+
+function renderClassification(field: FieldEntry): string {
+  const c = field.classification;
+  const pills: string[] = [];
+  if (c.securityClassification) {
+    pills.push(`<span class="class-sec" title="Security classification">${escapeHtml(c.securityClassification)}</span>`);
+  }
+  for (const tag of c.complianceGroup) {
+    pills.push(`<span class="class-comp" title="Compliance category">${escapeHtml(tag)}</span>`);
+  }
+  if (c.businessStatus) {
+    pills.push(`<span class="class-biz" title="Business status">${escapeHtml(c.businessStatus)}</span>`);
+  }
+  return pills.join('');
 }
 
 function fieldFlags(field: FieldEntry): string[] {
@@ -70,6 +86,7 @@ function renderField(field: FieldEntry): string {
       <td>${escapeHtml(field.label)}</td>
       <td><span class="type type-${escapeHtml(field.type)}">${escapeHtml(describeType(field))}</span></td>
       <td>${flagBadges}</td>
+      <td class="cls-cell">${renderClassification(field)}</td>
       <td>${description}${help}${picklist}${formula}</td>
     </tr>`;
 }
@@ -92,7 +109,7 @@ function renderObjectCard(obj: ObjectEntry): string {
       ${description}
       <table class="fields">
         <thead>
-          <tr><th>API Name</th><th>Label</th><th>Type</th><th>Flags</th><th>Details</th></tr>
+          <tr><th>API Name</th><th>Label</th><th>Type</th><th>Flags</th><th>Classification</th><th>Details</th></tr>
         </thead>
         <tbody>${rows}</tbody>
       </table>
@@ -289,6 +306,15 @@ body {
 .view-ref .flag-custom { color: var(--green); border-color: var(--green); }
 .view-ref .flag-formula { color: var(--orange); border-color: var(--orange); }
 .view-ref .flag-external-id { color: var(--cyan); border-color: var(--cyan); }
+.view-ref .cls-cell { white-space: normal; }
+.view-ref .class-sec, .view-ref .class-comp, .view-ref .class-biz {
+  display: inline-block; padding: 2px 7px; margin-right: 4px; margin-bottom: 3px;
+  font-size: 10.5px; letter-spacing: 0.3px; border-radius: 999px;
+  border: 1px solid var(--border); white-space: nowrap;
+}
+.view-ref .class-sec { color: var(--red); border-color: var(--red); background: rgba(255, 122, 138, 0.10); }
+.view-ref .class-comp { color: var(--orange); border-color: var(--orange); background: rgba(245, 167, 107, 0.10); }
+.view-ref .class-biz { color: var(--cyan); border-color: var(--cyan); background: rgba(108, 218, 255, 0.10); }
 .view-ref .tag {
   display: inline-block; padding: 1px 6px; margin-left: 4px;
   font-size: 10px; border-radius: 4px; background: var(--accent-soft); color: var(--accent);

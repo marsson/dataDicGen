@@ -10,6 +10,13 @@ export type PicklistValue = {
 
 export type RelationshipKind = 'master-detail' | 'lookup';
 
+export type FieldClassification = {
+  securityClassification?: string | null;
+  complianceGroup: string[];
+  businessStatus?: string | null;
+  businessOwnerGroup?: string | null;
+};
+
 export type FieldEntry = {
   name: string;
   label: string;
@@ -29,6 +36,7 @@ export type FieldEntry = {
   picklistValues: PicklistValue[];
   formula?: string | null;
   defaultValue?: string | null;
+  classification: FieldClassification;
 };
 
 export type ObjectEntry = {
@@ -74,6 +82,10 @@ type RawMetadataField = {
   description?: string | null;
   inlineHelpText?: string | null;
   formula?: string | null;
+  securityClassification?: string | null;
+  complianceGroup?: string | null;
+  businessStatus?: string | null;
+  businessOwnerGroup?: string | null;
 };
 
 type RawMetadataObject = {
@@ -117,6 +129,14 @@ export async function loadObject(filesDir: string, objectName: string): Promise<
     if (f.type === 'reference') {
       relationshipKind = f.cascadeDelete === true || meta?.type === 'MasterDetail' ? 'master-detail' : 'lookup';
     }
+    const classification: FieldClassification = {
+      securityClassification: meta?.securityClassification ?? null,
+      complianceGroup: meta?.complianceGroup
+        ? meta.complianceGroup.split(';').map((s) => s.trim()).filter((s) => s.length > 0)
+        : [],
+      businessStatus: meta?.businessStatus ?? null,
+      businessOwnerGroup: meta?.businessOwnerGroup ?? null,
+    };
     return {
       name: f.name,
       label: f.label,
@@ -141,6 +161,7 @@ export async function loadObject(filesDir: string, objectName: string): Promise<
       })),
       formula: meta?.formula ?? f.calculatedFormula ?? null,
       defaultValue: f.defaultValueFormula ?? null,
+      classification,
     };
   });
 

@@ -1,4 +1,11 @@
-import { ObjectEntry } from '../../src/shared/dictionary.js';
+import { FieldClassification, ObjectEntry } from '../../src/shared/dictionary.js';
+
+const noClass: FieldClassification = {
+  securityClassification: null,
+  complianceGroup: [],
+  businessStatus: null,
+  businessOwnerGroup: null,
+};
 
 export const accountObject: ObjectEntry = {
   apiName: 'Account',
@@ -17,6 +24,7 @@ export const accountObject: ObjectEntry = {
       custom: false,
       referenceTo: [],
       picklistValues: [],
+      classification: noClass,
     },
     {
       name: 'Name',
@@ -30,6 +38,7 @@ export const accountObject: ObjectEntry = {
       referenceTo: [],
       picklistValues: [],
       description: 'The display name for this account',
+      classification: noClass,
     },
     {
       name: 'Type',
@@ -44,6 +53,7 @@ export const accountObject: ObjectEntry = {
         { label: 'Customer', value: 'Customer', active: true, defaultValue: true },
         { label: 'Partner', value: 'Partner', active: true, defaultValue: false },
       ],
+      classification: noClass,
     },
   ],
 };
@@ -66,6 +76,24 @@ export const contactObject: ObjectEntry = {
       relationshipName: 'Account',
       relationshipKind: 'lookup',
       picklistValues: [],
+      classification: noClass,
+    },
+    {
+      name: 'Email',
+      label: 'Email',
+      type: 'email',
+      required: false,
+      unique: false,
+      externalId: false,
+      custom: false,
+      referenceTo: [],
+      picklistValues: [],
+      classification: {
+        securityClassification: 'Confidential',
+        complianceGroup: ['GDPR', 'PII'],
+        businessStatus: 'Active',
+        businessOwnerGroup: null,
+      },
     },
   ],
 };
@@ -88,6 +116,7 @@ export const customObject: ObjectEntry = {
       picklistValues: [
         { label: 'Active', value: 'Active', active: true, defaultValue: true },
       ],
+      classification: noClass,
     },
     {
       name: 'Total__c',
@@ -102,6 +131,7 @@ export const customObject: ObjectEntry = {
       referenceTo: [],
       picklistValues: [],
       formula: 'Amount__c * Quantity__c',
+      classification: noClass,
     },
     {
       name: 'Account__c',
@@ -115,6 +145,7 @@ export const customObject: ObjectEntry = {
       relationshipName: 'Account__r',
       relationshipKind: 'master-detail',
       picklistValues: [],
+      classification: noClass,
     },
   ],
 };
