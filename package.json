@@ -1,7 +1,7 @@
 {
   "name": "sfdxdatadicgen",
   "description": "Salesforce CLI plugin that generates a data dictionary from an org",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "author": "Marcelo Marsson @marsson",
   "bugs": "https://github.com/marsson/dataDicGen/issues",
   "dependencies": {

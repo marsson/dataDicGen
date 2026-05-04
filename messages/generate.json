@@ -1,6 +1,6 @@
 {
   "summary": "Generate a data dictionary for the selected org in one or more formats.",
-  "description": "Connects to the target org, describes its sObjects, and produces a data dictionary in the requested formats: Excel (.xlsx), HTML report, JSON, or Markdown. The HTML format also produces an interactive schema map under <output>/schema/.",
+  "description": "Connects to the target org, describes its sObjects, and produces a data dictionary in the requested formats: Excel (.xlsx), HTML report, JSON, or Markdown. The HTML report includes an interactive schema map (Reference / Schema map tabs) embedded in the same self-contained file.",
   "examples": [
     "$ sf data-dictionary generate --target-org myOrg@example.com",
     "$ sf data-dictionary generate -o myOrgName -m -s Case,Opportunity,Product2",

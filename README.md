@@ -9,13 +9,6 @@ Improve the governance of your Salesforce implementation with this Salesforce CL
 [![Downloads/week](https://img.shields.io/npm/dw/sfdxdatadicgen.svg)](https://npmjs.org/package/sfdxdatadicgen)
 [![License](https://img.shields.io/npm/l/dataDicGen.svg)](https://github.com/marsson/dataDicGen/blob/master/package.json)
 
-<!-- toc -->
-* [default: Excel](#default-excel)
-* [every format at once + schema map](#every-format-at-once--schema-map)
-* [HTML report + schema map only, custom output base](#html-report--schema-map-only-custom-output-base)
-* [include extra standard objects and a managed-package namespace](#include-extra-standard-objects-and-a-managed-package-namespace)
-<!-- tocstop -->
-
 ## Requirements
 
 - Node.js **>= 18**
@@ -36,17 +29,27 @@ $ sf plugins install https://github.com/marsson/dataDicGen
 
 ## Usage
 
+Default — Excel only:
+
 ```sh-session
-# default: Excel
 $ sf data-dictionary generate --target-org myOrg@example.com
+```
 
-# every format at once + schema map
+Every format at once (the schema map is embedded inside `<base>.html`):
+
+```sh-session
 $ sf data-dictionary generate -o myOrg --format xlsx,html,json,md
+```
 
-# HTML report + schema map only, custom output base
+HTML report only, with a custom output base:
+
+```sh-session
 $ sf data-dictionary generate -o myOrg -f ./out/dict --format html
+```
 
-# include extra standard objects and a managed-package namespace
+Include extra standard objects and a managed-package namespace:
+
+```sh-session
 $ sf data-dictionary generate -o myOrg -m -s Case,Opportunity -l npsp__
 ```
 
@@ -145,8 +148,8 @@ DESCRIPTION
   Generate a data dictionary for the selected org in one or more formats.
 
   Connects to the target org, describes its sObjects, and produces a data dictionary in the requested formats: Excel
-  (.xlsx), HTML report, JSON, or Markdown. The HTML format also produces an interactive schema map under
-  <output>/schema/.
+  (.xlsx), HTML report, JSON, or Markdown. The HTML report includes an interactive schema map (Reference / Schema map
+  tabs) embedded in the same self-contained file.
 
 ALIASES
   $ sf dataDictionary generate
@@ -191,8 +194,8 @@ DESCRIPTION
   Generate a data dictionary for the selected org in one or more formats.
 
   Connects to the target org, describes its sObjects, and produces a data dictionary in the requested formats: Excel
-  (.xlsx), HTML report, JSON, or Markdown. The HTML format also produces an interactive schema map under
-  <output>/schema/.
+  (.xlsx), HTML report, JSON, or Markdown. The HTML report includes an interactive schema map (Reference / Schema map
+  tabs) embedded in the same self-contained file.
 
 ALIASES
   $ sf dataDictionary generate
