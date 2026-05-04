@@ -1,4 +1,9 @@
 {
-  "extends": "../tsconfig"
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "noEmit": true,
+    "skipLibCheck": true
+  },
+  "include": ["./**/*"]
 }
-

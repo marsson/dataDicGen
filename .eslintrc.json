@@ -1,0 +1,35 @@
+{
+  "extends": ["eslint-config-salesforce-typescript", "eslint-config-salesforce"],
+  "root": true,
+  "parserOptions": {
+    "project": ["./tsconfig.json", "./test/tsconfig.json"]
+  },
+  "rules": {
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-require-imports": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-unsafe-return": "off",
+    "@typescript-eslint/no-unsafe-argument": "off"
+  },
+  "overrides": [
+    {
+      "files": ["test/**/*.ts"],
+      "env": { "mocha": true },
+      "rules": {
+        "no-unused-expressions": "off",
+        "@typescript-eslint/no-unused-expressions": "off"
+      }
+    },
+    {
+      "files": ["src/shared/builders/htmlBuilder.ts", "src/shared/builders/schemaViewer.ts", "src/shared/builders/mdBuilder.ts"],
+      "rules": {
+        "max-len": "off"
+      }
+    }
+  ]
+}

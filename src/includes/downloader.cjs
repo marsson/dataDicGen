@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const bytes = require('bytes');
-const Utils = require('./utils.js');
+const Utils = require('./utils.cjs');
 
 const FILE_DIR = '../files';
 

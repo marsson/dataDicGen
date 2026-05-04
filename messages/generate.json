@@ -1,9 +1,31 @@
 {
-  "commandDescription": "generates the Data dictionary for selected org in excel format",
-  "outputFlagDescription": "destination and file name for xls dataDictionary",
-  "outputFlagManagedPackage": "boolean that indicates if managed package files should also be included",
-  "includeStandardFlag": "Additional standard objects (Account, Contact and User go by default)",
-  "forceFlagDescription": "example boolean flag",
-  "errorNoMatchingsObject": "The Object '%s' does not seem to exist in this org.",
-  "includeManagePackageList": "List of namespaces of manage packages that will be downloaded.+"
+  "summary": "Generate a data dictionary for the selected org in one or more formats.",
+  "description": "Connects to the target org, describes its sObjects, and produces a data dictionary in the requested formats: Excel (.xlsx), HTML report, JSON, or Markdown. The HTML format also produces an interactive schema map under <output>/schema/.",
+  "examples": [
+    "$ sf data-dictionary generate --target-org myOrg@example.com",
+    "$ sf data-dictionary generate -o myOrgName -m -s Case,Opportunity,Product2",
+    "$ sf data-dictionary generate -o myOrgName -f ./out/dict --format xlsx,html,json,md",
+    "$ sf data-dictionary generate -o myOrgName -f ./out/dict --format html"
+  ],
+  "flags": {
+    "output": {
+      "summary": "Destination directory and base file name (extension is appended per format)."
+    },
+    "includemanaged": {
+      "summary": "Include objects from all managed packages."
+    },
+    "includestandardsobjects": {
+      "summary": "Additional standard objects to include (Account, Contact, and User are included by default)."
+    },
+    "includemanagedpackages": {
+      "summary": "Comma-separated namespaces of managed packages whose objects should be included."
+    },
+    "format": {
+      "summary": "Output formats to generate. One or more of: xlsx, html, json, md."
+    }
+  },
+  "errors": {
+    "noMatchingObject": "The Object '%s' does not seem to exist in this org.",
+    "unknownFormat": "Unknown format(s): %s. Allowed: xlsx, html, json, md."
+  }
 }

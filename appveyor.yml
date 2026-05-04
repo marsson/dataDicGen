@@ -1,5 +1,5 @@
 environment:
-  nodejs_version: "10"
+  nodejs_version: "20"
 cache:
   - '%LOCALAPPDATA%\Yarn -> appveyor.yml'
   - node_modules -> yarn.lock
@@ -11,7 +11,7 @@ install:
 build: off
 
 build_script:
-  - ps: Write-Host “Prepack plugin”
+  - ps: Write-Host "Prepack plugin"
   - yarn prepack
 
 test_script:
@@ -23,4 +23,3 @@ after_test:
       $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
       Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
       bash codecov.sh
-

@@ -1,0 +1,7 @@
+{
+  "node-option": ["loader=ts-node/esm", "no-warnings=ExperimentalWarning"],
+  "watch-files": ["test/**/*.ts"],
+  "recursive": true,
+  "reporter": "spec",
+  "timeout": 60000
+}

@@ -1,10 +1,14 @@
 *-debug.log
 *-error.log
+.eslintcache
 /.nyc_output
 /dist
 /lib
+/oclif.manifest.json
+/oclif.lock
 /package-lock.json
 /tmp
 node_modules
 src/files
 .idea/
+/.claude/

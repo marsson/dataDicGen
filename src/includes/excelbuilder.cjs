@@ -1,7 +1,7 @@
 const fs = require('fs');
 const excel = require('excel4node');
 const path = require('path');
-const Utils = require('./utils.js');
+const Utils = require('./utils.cjs');
 
 const FILE_DIR = '../files';
 const MAX_PICKLIST_VALUES = 300;
